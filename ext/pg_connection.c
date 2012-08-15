@@ -2154,7 +2154,7 @@ pgconn_put_copy_end(int argc, VALUE *argv, VALUE self)
 		error_message = StringValuePtr(str);
 
 	ret = PQputCopyEnd(conn, error_message);
-	if(ret == -1) {
+	if(ret == -1 || error_message != NULL) {
 		error = rb_exc_new2(rb_ePGerror, PQerrorMessage(conn));
 		rb_iv_set(error, "@connection", self);
 		rb_exc_raise(error);
